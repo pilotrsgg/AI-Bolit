@@ -19,6 +19,9 @@
 // На скрипт получено авторское свидетельство в Роспатенте
 // http://revisium.com/ai/i/mini_aibolit.jpg
 ///////////////////////////////////////////////////////////////////////////
+
+ini_set("error_reporting", E_ALL & ~E_DEPRECATED);
+
 ini_set('memory_limit', '1G');
 ini_set('xdebug.max_nesting_level', 500);
 
@@ -1223,7 +1226,7 @@ class CmsVersionDetector {
     }
     
     function isCms($name, $version) {
-        for ($i = 0; $i < count($this->types); $i++) {
+        for ($i = 0; $i < count((array)$this->types); $i++) {
             if ((strpos($this->types[$i], $name) !== false) && (strpos($this->versions[$i], $version) !== false)) {
                 return true;
             }
@@ -1241,7 +1244,7 @@ class CmsVersionDetector {
     }
     
     function getCmsNumber() {
-        return count($this->types);
+        return count((array)$this->types);
     }
     
     function getCmsName($index = 0) {
@@ -1642,12 +1645,12 @@ function printProgress($num, &$par_File) {
     $percent      = number_format($total_files ? $num * 100 / $total_files : 0, 1);
     $stat         = '';
     if ($elapsed_time >= 1) {
-        $elapsed_seconds = round($elapsed_time, 0);
+        $elapsed_seconds = round((int)$elapsed_time, 0);
         $fs              = floor($num / $elapsed_seconds);
         $left_files      = $total_files - $num;
         if ($fs > 0) {
             $left_time = ($left_files / $fs); //ceil($left_files / $fs);
-            $stat      = ' [Avg: ' . round($fs, 2) . ' files/s' . ($left_time > 0 ? ' Left: ' . seconds2Human($left_time) : '') . '] [Mlw:' . (count($g_CriticalPHP) + count($g_Base64)) . '|' . (count($g_CriticalJS) + count($g_Iframer) + count($g_Phishing)) . ']';
+            $stat      = ' [Avg: ' . round((int)$fs, 2) . ' files/s' . ($left_time > 0 ? ' Left: ' . seconds2Human($left_time) : '') . '] [Mlw:' . (count((array)$g_CriticalPHP) + count((array)$g_Base64)) . '|' . (count((array)$g_CriticalJS) + count((array)$g_Iframer) + count((array)$g_Phishing)) . ']';
         }
     }
     
@@ -1665,7 +1668,7 @@ function printProgress($num, &$par_File) {
         'updated' => time(),
         'progress' => $percent,
         'time_elapsed' => $elapsed_seconds,
-        'time_left' => round($left_time),
+        'time_left' => round((int)$left_time),
         'files_left' => $left_files,
         'files_total' => $total_files,
         'current_file' => substr($g_AddPrefix . str_replace($g_NoPrefix, '', $par_File), -160)
@@ -1707,7 +1710,7 @@ function seconds2Human($seconds) {
     }
     
     if ($minutes < 3)
-        $r .= ' ' . $seconds + ($ms > 0 ? round($ms) : 0) . (isCli() ? ' s' : ' сек');
+        $r .= ' ' . $seconds + ($ms > 0 ? round((int)$ms) : 0) . (isCli() ? ' s' : ' сек');
     
     return $r;
 }
@@ -1955,7 +1958,7 @@ HELP;
         if ($ext_list != '') {
             $l_FastCli        = true;
             $g_SensitiveFiles = explode(",", $ext_list);
-            for ($i = 0; $i < count($g_SensitiveFiles); $i++) {
+            for ($i = 0; $i < count((array)$g_SensitiveFiles); $i++) {
                 if ($g_SensitiveFiles[$i] == '.') {
                     $g_SensitiveFiles[$i] = '';
                 }
@@ -2074,51 +2077,51 @@ if (isset($defaults['avdb']) && file_exists($defaults['avdb'])) {
     $g_DeMapper    = array_combine(explode("\n", base64_decode($avdb[12])), explode("\n", base64_decode($avdb[13])));
     $g_Mnemo    = @array_flip(@array_combine(explode("\n", base64_decode($avdb[14])), explode("\n", base64_decode($avdb[15]))));
     
-    if (count($g_DBShe) <= 1) {
+    if (count((array)$g_DBShe) <= 1) {
         $g_DBShe = array();
     }
     
-    if (count($gX_DBShe) <= 1) {
+    if (count((array)$gX_DBShe) <= 1) {
         $gX_DBShe = array();
     }
     
-    if (count($g_FlexDBShe) <= 1) {
+    if (count((array)$g_FlexDBShe) <= 1) {
         $g_FlexDBShe = array();
     }
     
-    if (count($gX_FlexDBShe) <= 1) {
+    if (count((array)$gX_FlexDBShe) <= 1) {
         $gX_FlexDBShe = array();
     }
     
-    if (count($gXX_FlexDBShe) <= 1) {
+    if (count((array)$gXX_FlexDBShe) <= 1) {
         $gXX_FlexDBShe = array();
     }
     
-    if (count($g_ExceptFlex) <= 1) {
+    if (count((array)$g_ExceptFlex) <= 1) {
         $g_ExceptFlex = array();
     }
     
-    if (count($g_AdwareSig) <= 1) {
+    if (count((array)$g_AdwareSig) <= 1) {
         $g_AdwareSig = array();
     }
     
-    if (count($g_PhishingSig) <= 1) {
+    if (count((array)$g_PhishingSig) <= 1) {
         $g_PhishingSig = array();
     }
     
-    if (count($gX_JSVirSig) <= 1) {
+    if (count((array)$gX_JSVirSig) <= 1) {
         $gX_JSVirSig = array();
     }
     
-    if (count($g_JSVirSig) <= 1) {
+    if (count((array)$g_JSVirSig) <= 1) {
         $g_JSVirSig = array();
     }
     
-    if (count($g_SusDB) <= 1) {
+    if (count((array)$g_SusDB) <= 1) {
         $g_SusDB = array();
     }
     
-    if (count($g_SusDBPrio) <= 1) {
+    if (count((array)$g_SusDBPrio) <= 1) {
         $g_SusDBPrio = array();
     }
     
@@ -2136,7 +2139,7 @@ if (isset($defaults['userid'])) {
     stdOut('Running from ' . $defaults['userid'] . ':' . $defaults['groupid']);
 }
 
-stdOut('Malware signatures: ' . (count($g_JSVirSig) + count($gX_JSVirSig) + count($g_DBShe) + count($gX_DBShe) + count($gX_DBShe) + count($g_FlexDBShe) + count($gX_FlexDBShe) + count($gXX_FlexDBShe)));
+stdOut('Malware signatures: ' . (count((array)$g_JSVirSig) + count((array)$gX_JSVirSig) + count((array)$g_DBShe) + count((array)$gX_DBShe) + count((array)$gX_DBShe) + count((array)$g_FlexDBShe) + count((array)$gX_FlexDBShe) + count((array)$gXX_FlexDBShe)));
 
 if ($g_SpecificExt) {
     stdOut("Scan specific extensions: " . implode(',', $g_SensitiveFiles));
@@ -2286,7 +2289,7 @@ function getEmails($email) {
  */
 function getBytes($val) {
     $val  = trim($val);
-    $last = strtolower($val{strlen($val) - 1});
+    $last = strtolower($val[strlen($val) - 1]);
     switch ($last) {
         case 't':
             $val *= 1024;
@@ -2323,7 +2326,7 @@ function bytes2Human($bites) {
 function needIgnore($par_FN, $par_CRC) {
     global $g_IgnoreList;
     
-    for ($i = 0; $i < count($g_IgnoreList); $i++) {
+    for ($i = 0; $i < count((array)$g_IgnoreList); $i++) {
         if (strpos($par_FN, $g_IgnoreList[$i][0]) !== false) {
             if ($par_CRC == $g_IgnoreList[$i][1]) {
                 return true;
@@ -2352,7 +2355,7 @@ function makeSafeFn($par_Str, $replace_path = false) {
 
 function replacePathArray($par_Arr) {
     global $g_AddPrefix, $g_NoPrefix;
-    array_walk($par_Arr, function(&$n) {
+    array_walk((array)$par_Arr, function(&$n) {
         global $g_AddPrefix, $g_NoPrefix;
         $n = $g_AddPrefix . str_replace($g_NoPrefix, '', $n);
     });
@@ -2381,7 +2384,7 @@ function getRawJsonVuln($par_List) {
         '<' . '?php '
     );
     
-    for ($i = 0; $i < count($par_List); $i++) {
+    for ($i = 0; $i < count((array)$par_List); $i++) {
         $l_Pos      = $par_List[$i]['ndx'];
         $res['fn']  = convertToUTF8($g_AddPrefix . str_replace($g_NoPrefix, '', $g_Structure['n'][$l_Pos]));
         $res['sig'] = $par_List[$i]['id'];
@@ -2418,7 +2421,7 @@ function getRawJson($par_List, $par_Details = null, $par_SigId = null) {
         '<' . '?php '
     );
     
-    for ($i = 0; $i < count($par_List); $i++) {
+    for ($i = 0; $i < count((array)$par_List); $i++) {
         if ($par_SigId != null) {
             $l_SigId = 'id_' . $par_SigId[$i];
         } else {
@@ -2480,7 +2483,7 @@ function printList($par_List, $par_Details = null, $par_NeedIgnore = false, $par
     
     $l_Result .= "</tr></thead><tbody>";
     
-    for ($i = 0; $i < count($par_List); $i++) {
+    for ($i = 0; $i < count((array)$par_List); $i++) {
         if ($par_SigId != null) {
             $l_SigId = 'id_' . $par_SigId[$i];
         } else {
@@ -2559,7 +2562,7 @@ function printPlainList($par_List, $par_Details = null, $par_NeedIgnore = false,
         '\''
     );
     
-    for ($i = 0; $i < count($par_List); $i++) {
+    for ($i = 0; $i < count((array)$par_List); $i++) {
         $l_Pos = $par_List[$i];
         if ($par_NeedIgnore) {
             if (needIgnore($g_Structure['n'][$par_List[$i]], $g_Structure['crc'][$l_Pos])) {
@@ -2701,13 +2704,13 @@ function QCR_ScanDirectories($l_RootDir) {
             // which files should be scanned
             $l_NeedToScan = SCAN_ALL_FILES || (in_array($l_Ext, $g_SensitiveFiles));
             
-            if (in_array(strtolower($l_Ext), $g_IgnoredExt)) {
+            if (in_array(strtolower($l_Ext), (array)$g_IgnoredExt)) {
                 $l_NeedToScan = false;
             }
             
             // if folder in ignore list
             $l_Skip = false;
-            for ($dr = 0; $dr < count($g_DirIgnoreList); $dr++) {
+            for ($dr = 0; $dr < count((array)$g_DirIgnoreList); $dr++) {
                 if (($g_DirIgnoreList[$dr] != '') && preg_match('#' . $g_DirIgnoreList[$dr] . '#', $l_FileName, $l_Found)) {
                     if (!in_array($g_DirIgnoreList[$dr], $l_SkipSample)) {
                         $l_SkipSample[] = $g_DirIgnoreList[$dr];
@@ -2918,9 +2921,9 @@ function UnwrapObfu($par_Content) {
         '?',
         '?'
     );
-    $par_Content = str_replace('@', '', $par_Content);
+    $par_Content = $par_Content ? str_replace('@', '', $par_Content): "";
     $par_Content = preg_replace('~\s+~smi', ' ', $par_Content);
-    $par_Content = str_replace($search, $replace, $par_Content);
+    $par_Content = $par_Content ? str_replace($search, $replace, $par_Content): "";
     $par_Content = preg_replace_callback('~\bchr\(\s*([0-9a-fA-FxX]+)\s*\)~', function($m) {
         return "'" . chr(intval($m[1], 0)) . "'";
     }, $par_Content);
@@ -2931,8 +2934,8 @@ function UnwrapObfu($par_Content) {
     $par_Content = preg_replace('/[\'"]\s*?\.+\s*?[\'"]/smi', '', $par_Content);
     $par_Content = preg_replace('/[\'"]\s*?\++\s*?[\'"]/smi', '', $par_Content);
     
-    $content = str_replace('<?$', '<?php$', $content);
-    $content = str_replace('<?php', '<?php ', $content);
+    $content = $content ? str_replace('<?$', '<?php$', $content): "";
+    $content = $content ? str_replace('<?php', '<?php ', $content): "";
     
     return $par_Content;
 }
@@ -2982,7 +2985,7 @@ function QCR_SearchPHP($src) {
 function knowUrl($par_URL) {
     global $g_UrlIgnoreList;
     
-    for ($jk = 0; $jk < count($g_UrlIgnoreList); $jk++) {
+    for ($jk = 0; $jk < count((array)$g_UrlIgnoreList); $jk++) {
         if (stripos($par_URL, $g_UrlIgnoreList[$jk]) !== false) {
             return true;
         }
@@ -4020,9 +4023,9 @@ for ($tt = 0; $tt < $l_CmsDetectedNum; $tt++) {
     $tmp_cms[strtolower($g_CmsListDetector->getCmsName($tt))] = 1;
 }
 
-if (count($tmp_cms) > 0) {
+if (count((array)$tmp_cms) > 0) {
     $g_KnownCMS = array_keys($tmp_cms);
-    $len        = count($g_KnownCMS);
+    $len        = count((array)$g_KnownCMS);
     for ($i = 0; $i < $len; $i++) {
         if ($g_KnownCMS[$i] == strtolower(CMS_WORDPRESS))
             $g_KnownCMS[] = 'wp';
@@ -4053,7 +4056,7 @@ $l_UrlIgnoreFilename = $g_AiBolitAbsolutePath . '/.aurlignore';
 
 if (file_exists($l_IgnoreFilename)) {
     $l_IgnoreListRaw = file($l_IgnoreFilename);
-    for ($i = 0; $i < count($l_IgnoreListRaw); $i++) {
+    for ($i = 0; $i < count((array)$l_IgnoreListRaw); $i++) {
         $g_IgnoreList[] = explode("\t", trim($l_IgnoreListRaw[$i]));
     }
     unset($l_IgnoreListRaw);
@@ -4062,7 +4065,7 @@ if (file_exists($l_IgnoreFilename)) {
 if (file_exists($l_DirIgnoreFilename)) {
     $g_DirIgnoreList = file($l_DirIgnoreFilename);
     
-    for ($i = 0; $i < count($g_DirIgnoreList); $i++) {
+    for ($i = 0; $i < count((array)$g_DirIgnoreList); $i++) {
         $g_DirIgnoreList[$i] = trim($g_DirIgnoreList[$i]);
     }
 }
@@ -4070,7 +4073,7 @@ if (file_exists($l_DirIgnoreFilename)) {
 if (file_exists($l_UrlIgnoreFilename)) {
     $g_UrlIgnoreList = file($l_UrlIgnoreFilename);
     
-    for ($i = 0; $i < count($g_UrlIgnoreList); $i++) {
+    for ($i = 0; $i < count((array)$g_UrlIgnoreList); $i++) {
         $g_UrlIgnoreList[$i] = trim($g_UrlIgnoreList[$i]);
     }
 }
@@ -4181,7 +4184,7 @@ QCR_Debug();
 $defaults['skip_ext'] = strtolower(trim($defaults['skip_ext']));
 if ($defaults['skip_ext'] != '') {
     $g_IgnoredExt = explode(',', $defaults['skip_ext']);
-    for ($i = 0; $i < count($g_IgnoredExt); $i++) {
+    for ($i = 0; $i < count((array)$g_IgnoredExt); $i++) {
         $g_IgnoredExt[$i] = trim($g_IgnoredExt[$i]);
     }
     
@@ -4223,7 +4226,7 @@ if (defined('SCAN_FILE')) {
            $lines = file($listing);
         }
 
-        for ($i = 0, $size = count($lines); $i < $size; $i++) {
+        for ($i = 0, $size = count((array)$lines); $i < $size; $i++) {
             $lines[$i] = trim($lines[$i]);
             if (empty($lines[$i]))
                 unset($lines[$i]);
@@ -4236,7 +4239,7 @@ if (defined('SCAN_FILE')) {
             $i = 1;
         }
         
-        $g_FoundTotalFiles = count($lines);
+        $g_FoundTotalFiles = count((array)$lines);
         foreach ($lines as $l_FN) {
             is_dir($l_FN) && $g_TotalFolder++;
             printProgress($i++, $l_FN);
@@ -4272,7 +4275,7 @@ if (defined('SCAN_FILE')) {
                     if (in_array(strtolower($l_Ext2), $g_IgnoredExt)) {
                         continue;
                     }
-                    for ($dr = 0; $dr < count($g_DirIgnoreList); $dr++) {
+                    for ($dr = 0; $dr < count((array)$g_DirIgnoreList); $dr++) {
                         if (($g_DirIgnoreList[$dr] != '') && preg_match('#' . $g_DirIgnoreList[$dr] . '#', $l_FileName, $l_Found)) {
                             continue 2;
                         }
@@ -4285,8 +4288,8 @@ if (defined('SCAN_FILE')) {
                     $changes[$type][] = ++$i;
                     AddResult($l_FileName, $i);
                 }
-                $g_FoundTotalFiles = count($changes['addedFiles']) + count($changes['modifiedFiles']);
-                stdOut("Found changes " . count($changes['modifiedFiles']) . " files and added " . count($changes['addedFiles']) . " files.");
+                $g_FoundTotalFiles = count((array)$changes['addedFiles']) + count((array)$changes['modifiedFiles']);
+                stdOut("Found changes " . count((array)$changes['modifiedFiles']) . " files and added " . count((array)$changes['addedFiles']) . " files.");
             }
             
         } else {
@@ -4336,7 +4339,7 @@ foreach (array(
     if ($p == 'g_Phishing')
         $p_Sig = $p . "SigFragment";
     
-    $count = count($$p);
+    $count = count((array)$$p);
     for ($i = 0; $i < $count; $i++) {
         $id = "{${$p}[$i]}";
         if (in_array($g_Structure['crc'][$id], $list)) {
@@ -4383,7 +4386,7 @@ if (AI_HOSTER) {
 }
 
 if (BOOL_RESULT && (!defined('NEED_REPORT'))) {
-    if ((count($g_CriticalPHP) > 0) OR (count($g_CriticalJS) > 0) OR (count($g_PhishingSig) > 0)) {
+    if ((count((array)$g_CriticalPHP) > 0) OR (count((array)$g_CriticalJS) > 0) OR (count((array)$g_PhishingSig) > 0)) {
         exit(2);
     } else {
         exit(0);
@@ -4402,13 +4405,13 @@ $l_ShowOffer = false;
 
 stdOut("\nBuilding report [ mode = " . AI_EXPERT . " ]\n");
 
-//stdOut("\nLoaded signatures: " . count($g_FlexDBShe) . " / " . count($g_JSVirSig) . "\n");
+//stdOut("\nLoaded signatures: " . count((array)$g_FlexDBShe) . " / " . count((array)$g_JSVirSig) . "\n");
 
 ////////////////////////////////////////////////////////////////////////////
 // save 
 if (!(ICHECK || IMAKE))
     if (isset($options['with-2check']) || isset($options['quarantine']))
-        if ((count($g_CriticalPHP) > 0) OR (count($g_CriticalJS) > 0) OR (count($g_Base64) > 0) OR (count($g_Iframer) > 0) OR (count($g_UnixExec))) {
+        if ((count((array)$g_CriticalPHP) > 0) OR (count((array)$g_CriticalJS) > 0) OR (count((array)$g_Base64) > 0) OR (count((array)$g_Iframer) > 0) OR (count((array)$g_UnixExec))) {
             if (!file_exists(DOUBLECHECK_FILE)) {
                 if ($l_FH = fopen(DOUBLECHECK_FILE, 'w')) {
                     fputs($l_FH, '<?php die("Forbidden"); ?>' . "\n");
@@ -4440,17 +4443,17 @@ if (!(ICHECK || IMAKE))
                     $tmpIndex = array_merge($g_CriticalPHP, $g_CriticalJS, $g_Phishing, $g_Base64, $g_Iframer, $g_AdwareList, $g_Redirect);
                     $tmpIndex = array_values(array_unique($tmpIndex));
                     
-                    for ($i = 0; $i < count($tmpIndex); $i++) {
+                    for ($i = 0; $i < count((array)$tmpIndex); $i++) {
                         $tmpIndex[$i] = str_replace($l_CurrPath, '.', $g_Structure['n'][$tmpIndex[$i]]);
                     }
                     
-                    for ($i = 0; $i < count($g_UnixExec); $i++) {
+                    for ($i = 0; $i < count((array)$g_UnixExec); $i++) {
                         $tmpIndex[] = str_replace($l_CurrPath, '.', $g_UnixExec[$i]);
                     }
                     
                     $tmpIndex = array_values(array_unique($tmpIndex));
                     
-                    for ($i = 0; $i < count($tmpIndex); $i++) {
+                    for ($i = 0; $i < count((array)$tmpIndex); $i++) {
                         fputs($l_FH, $tmpIndex[$i] . "\n");
                     }
                     
@@ -4471,48 +4474,48 @@ if (!(ICHECK || IMAKE))
 $l_Summary = '<div class="title">' . AI_STR_074 . '</div>';
 $l_Summary .= '<table cellspacing=0 border=0>';
 
-if (count($g_Redirect) > 0) {
-    $l_Summary .= makeSummary(AI_STR_059, count($g_Redirect), "crit");
+if (count((array)$g_Redirect) > 0) {
+    $l_Summary .= makeSummary(AI_STR_059, count((array)$g_Redirect), "crit");
 }
 
-if (count($g_CriticalPHP) > 0) {
-    $l_Summary .= makeSummary(AI_STR_060, count($g_CriticalPHP), "crit");
+if (count((array)$g_CriticalPHP) > 0) {
+    $l_Summary .= makeSummary(AI_STR_060, count((array)$g_CriticalPHP), "crit");
 }
 
-if (count($g_CriticalJS) > 0) {
-    $l_Summary .= makeSummary(AI_STR_061, count($g_CriticalJS), "crit");
+if (count((array)$g_CriticalJS) > 0) {
+    $l_Summary .= makeSummary(AI_STR_061, count((array)$g_CriticalJS), "crit");
 }
 
-if (count($g_Phishing) > 0) {
-    $l_Summary .= makeSummary(AI_STR_062, count($g_Phishing), "crit");
+if (count((array)$g_Phishing) > 0) {
+    $l_Summary .= makeSummary(AI_STR_062, count((array)$g_Phishing), "crit");
 }
 
-if (count($g_NotRead) > 0) {
-    $l_Summary .= makeSummary(AI_STR_066, count($g_NotRead), "crit");
+if (count((array)$g_NotRead) > 0) {
+    $l_Summary .= makeSummary(AI_STR_066, count((array)$g_NotRead), "crit");
 }
 
-if (count($g_BigFiles) > 0) {
-    $l_Summary .= makeSummary(AI_STR_065, count($g_BigFiles), "warn");
+if (count((array)$g_BigFiles) > 0) {
+    $l_Summary .= makeSummary(AI_STR_065, count((array)$g_BigFiles), "warn");
 }
 
-if (count($g_SymLinks) > 0) {
-    $l_Summary .= makeSummary(AI_STR_069, count($g_SymLinks), "warn");
+if (count((array)$g_SymLinks) > 0) {
+    $l_Summary .= makeSummary(AI_STR_069, count((array)$g_SymLinks), "warn");
 }
 
 $l_Summary .= "</table>";
 
 $l_ArraySummary                      = array();
-$l_ArraySummary["redirect"]          = count($g_Redirect);
-$l_ArraySummary["critical_php"]      = count($g_CriticalPHP);
-$l_ArraySummary["critical_js"]       = count($g_CriticalJS);
-$l_ArraySummary["phishing"]          = count($g_Phishing);
-$l_ArraySummary["unix_exec"]         = 0; // count($g_UnixExec);
-$l_ArraySummary["iframes"]           = 0; // count($g_Iframer);
-$l_ArraySummary["not_read"]          = count($g_NotRead);
-$l_ArraySummary["base64"]            = 0; // count($g_Base64);
-$l_ArraySummary["heuristics"]        = 0; // count($g_HeuristicDetected);
-$l_ArraySummary["symlinks"]          = count($g_SymLinks);
-$l_ArraySummary["big_files_skipped"] = count($g_BigFiles);
+$l_ArraySummary["redirect"]          = count((array)$g_Redirect);
+$l_ArraySummary["critical_php"]      = count((array)$g_CriticalPHP);
+$l_ArraySummary["critical_js"]       = count((array)$g_CriticalJS);
+$l_ArraySummary["phishing"]          = count((array)$g_Phishing);
+$l_ArraySummary["unix_exec"]         = 0; // count((array)$g_UnixExec);
+$l_ArraySummary["iframes"]           = 0; // count((array)$g_Iframer);
+$l_ArraySummary["not_read"]          = count((array)$g_NotRead);
+$l_ArraySummary["base64"]            = 0; // count((array)$g_Base64);
+$l_ArraySummary["heuristics"]        = 0; // count((array)$g_HeuristicDetected);
+$l_ArraySummary["symlinks"]          = count((array)$g_SymLinks);
+$l_ArraySummary["big_files_skipped"] = count((array)$g_BigFiles);
 
 if (function_exists('json_encode')) {
     $l_Summary .= "<!--[json]" . json_encode($l_ArraySummary) . "[/json]-->";
@@ -4543,20 +4546,20 @@ $l_RawReport = array();
 $l_RawReport['summary'] = array(
     'scan_path' => $defaults['path'],
     'report_time' => time(),
-    'scan_time' => round(microtime(true) - START_TIME, 1),
+    'scan_time' => round((int)microtime(true) - START_TIME, 1),
     'total_files' => $g_FoundTotalFiles,
     'counters' => $l_ArraySummary,
     'ai_version' => AI_VERSION
 );
 
 if (!AI_HOSTER) {
-    stdOut("Building list of vulnerable scripts " . count($g_Vulnerable));
+    stdOut("Building list of vulnerable scripts " . count((array)$g_Vulnerable));
     
-    if (count($g_Vulnerable) > 0) {
-        $l_Result .= '<div class="note_vir">' . AI_STR_081 . ' (' . count($g_Vulnerable) . ')</div><div class="crit">';
+    if (count((array)$g_Vulnerable) > 0) {
+        $l_Result .= '<div class="note_vir">' . AI_STR_081 . ' (' . count((array)$g_Vulnerable) . ')</div><div class="crit">';
         foreach ($g_Vulnerable as $l_Item) {
             $l_Result .= '<li>' . makeSafeFn($g_Structure['n'][$l_Item['ndx']], true) . ' - ' . $l_Item['id'] . '</li>';
-            $l_PlainResult .= '[VULNERABILITY] ' . replacePathArray($g_Structure['n'][$l_Item['ndx']]) . ' - ' . $l_Item['id'] . "\n";
+            //$l_PlainResult .= '[VULNERABILITY] ' . replacePathArray($g_Structure['n'][$l_Item['ndx']]) . ' - ' . $l_Item['id'] . "\n";
         }
         
         $l_Result .= '</div><p>' . PHP_EOL;
@@ -4565,14 +4568,14 @@ if (!AI_HOSTER) {
 }
 
 
-stdOut("Building list of shells " . count($g_CriticalPHP));
+stdOut("Building list of shells " . count((array)$g_CriticalPHP));
 
 $l_RawReport['vulners'] = getRawJsonVuln($g_Vulnerable);
 
-if (count($g_CriticalPHP) > 0) {
+if (count((array)$g_CriticalPHP) > 0) {
     $g_CriticalPHP              = array_slice($g_CriticalPHP, 0, 15000);
     $l_RawReport['php_malware'] = getRawJson($g_CriticalPHP, $g_CriticalPHPFragment, $g_CriticalPHPSig);
-    $l_Result .= '<div class="note_vir">' . AI_STR_016 . ' (' . count($g_CriticalPHP) . ')</div><div class="crit">';
+    $l_Result .= '<div class="note_vir">' . AI_STR_016 . ' (' . count((array)$g_CriticalPHP) . ')</div><div class="crit">';
     $l_Result .= printList($g_CriticalPHP, $g_CriticalPHPFragment, true, $g_CriticalPHPSig, 'table_crit');
     $l_PlainResult .= '[SERVER MALWARE]' . "\n" . printPlainList($g_CriticalPHP, $g_CriticalPHPFragment, true, $g_CriticalPHPSig, 'table_crit') . "\n";
     $l_Result .= '</div>' . PHP_EOL;
@@ -4582,12 +4585,12 @@ if (count($g_CriticalPHP) > 0) {
     $l_Result .= '<div class="ok"><b>' . AI_STR_017 . '</b></div>';
 }
 
-stdOut("Building list of js " . count($g_CriticalJS));
+stdOut("Building list of js " . count((array)$g_CriticalJS));
 
-if (count($g_CriticalJS) > 0) {
+if (count((array)$g_CriticalJS) > 0) {
     $g_CriticalJS              = array_slice($g_CriticalJS, 0, 15000);
     $l_RawReport['js_malware'] = getRawJson($g_CriticalJS, $g_CriticalJSFragment, $g_CriticalJSSig);
-    $l_Result .= '<div class="note_vir">' . AI_STR_018 . ' (' . count($g_CriticalJS) . ')</div><div class="crit">';
+    $l_Result .= '<div class="note_vir">' . AI_STR_018 . ' (' . count((array)$g_CriticalJS) . ')</div><div class="crit">';
     $l_Result .= printList($g_CriticalJS, $g_CriticalJSFragment, true, $g_CriticalJSSig, 'table_vir');
     $l_PlainResult .= '[CLIENT MALWARE / JS]' . "\n" . printPlainList($g_CriticalJS, $g_CriticalJSFragment, true, $g_CriticalJSSig, 'table_vir') . "\n";
     $l_Result .= "</div>" . PHP_EOL;
@@ -4595,23 +4598,23 @@ if (count($g_CriticalJS) > 0) {
     $l_ShowOffer = true;
 }
 
-stdOut("Building list of unread files " . count($g_NotRead));
+stdOut("Building list of unread files " . count((array)$g_NotRead));
 
-if (count($g_NotRead) > 0) {
+if (count((array)$g_NotRead) > 0) {
     $g_NotRead               = array_slice($g_NotRead, 0, AIBOLIT_MAX_NUMBER);
     $l_RawReport['not_read'] = $g_NotRead;
-    $l_Result .= '<div class="note_vir">' . AI_STR_030 . ' (' . count($g_NotRead) . ')</div><div class="crit">';
+    $l_Result .= '<div class="note_vir">' . AI_STR_030 . ' (' . count((array)$g_NotRead) . ')</div><div class="crit">';
     $l_Result .= printList($g_NotRead);
     $l_Result .= "</div><div class=\"spacer\"></div>" . PHP_EOL;
     $l_PlainResult .= '[SCAN ERROR / SKIPPED]' . "\n" . printPlainList($g_NotRead) . "\n\n";
 }
 
 if (!AI_HOSTER) {
-    stdOut("Building list of phishing pages " . count($g_Phishing));
+    stdOut("Building list of phishing pages " . count((array)$g_Phishing));
     
-    if (count($g_Phishing) > 0) {
+    if (count((array)$g_Phishing) > 0) {
         $l_RawReport['phishing'] = getRawJson($g_Phishing, $g_PhishingFragment, $g_PhishingSigFragment);
-        $l_Result .= '<div class="note_vir">' . AI_STR_058 . ' (' . count($g_Phishing) . ')</div><div class="crit">';
+        $l_Result .= '<div class="note_vir">' . AI_STR_058 . ' (' . count((array)$g_Phishing) . ')</div><div class="crit">';
         $l_Result .= printList($g_Phishing, $g_PhishingFragment, true, $g_PhishingSigFragment, 'table_vir');
         $l_PlainResult .= '[PHISHING]' . "\n" . printPlainList($g_Phishing, $g_PhishingFragment, true, $g_PhishingSigFragment, 'table_vir') . "\n";
         $l_Result .= "</div>" . PHP_EOL;
@@ -4619,21 +4622,21 @@ if (!AI_HOSTER) {
         $l_ShowOffer = true;
     }
     
-    stdOut("Building list of redirects " . count($g_Redirect));
-    if (count($g_Redirect) > 0) {
+    stdOut("Building list of redirects " . count((array)$g_Redirect));
+    if (count((array)$g_Redirect) > 0) {
         $l_RawReport['redirect'] = getRawJson($g_Redirect, $g_RedirectPHPFragment);
         $l_ShowOffer             = true;
-        $l_Result .= '<div class="note_vir">' . AI_STR_027 . ' (' . count($g_Redirect) . ')</div><div class="crit">';
+        $l_Result .= '<div class="note_vir">' . AI_STR_027 . ' (' . count((array)$g_Redirect) . ')</div><div class="crit">';
         $l_Result .= printList($g_Redirect, $g_RedirectPHPFragment, true);
         $l_Result .= "</div>" . PHP_EOL;
     }
     
-    stdOut("Building list of symlinks " . count($g_SymLinks));
+    stdOut("Building list of symlinks " . count((array)$g_SymLinks));
     
-    if (count($g_SymLinks) > 0) {
+    if (count((array)$g_SymLinks) > 0) {
         $g_SymLinks               = array_slice($g_SymLinks, 0, AIBOLIT_MAX_NUMBER);
         $l_RawReport['sym_links'] = $g_SymLinks;
-        $l_Result .= '<div class="note_vir">' . AI_STR_022 . ' (' . count($g_SymLinks) . ')</div><div class="crit">';
+        $l_Result .= '<div class="note_vir">' . AI_STR_022 . ' (' . count((array)$g_SymLinks) . ')</div><div class="crit">';
         $l_Result .= nl2br(makeSafeFn(implode("\n", $g_SymLinks), true));
         $l_Result .= "</div><div class=\"spacer\"></div>";
     }
@@ -4642,15 +4645,15 @@ if (!AI_HOSTER) {
 
 ////////////////////////////////////
 if (!AI_HOSTER) {
-    $l_WarningsNum = count($g_HeuristicDetected) + count($g_HiddenFiles) + count($g_BigFiles) + count($g_PHPCodeInside) + count($g_AdwareList) + count($g_EmptyLink) + count($g_Doorway) + (count($g_WarningPHP[0]) + count($g_WarningPHP[1]) + count($g_SkippedFolders));
+    $l_WarningsNum = count((array)$g_HeuristicDetected) + count((array)$g_HiddenFiles) + count((array)$g_BigFiles) + count((array)$g_PHPCodeInside) + count((array)$g_AdwareList) + count((array)$g_EmptyLink) + count((array)$g_Doorway) + (count((array)$g_WarningPHP[0]) + count((array)$g_WarningPHP[1]) + count((array)$g_SkippedFolders));
     
     if ($l_WarningsNum > 0) {
         $l_Result .= "<div style=\"margin-top: 20px\" class=\"title\">" . AI_STR_026 . "</div>";
     }
     
-    stdOut("Building list of adware " . count($g_AdwareList));
+    stdOut("Building list of adware " . count((array)$g_AdwareList));
     
-    if (count($g_AdwareList) > 0) {
+    if (count((array)$g_AdwareList) > 0) {
         $l_RawReport['adware'] = getRawJson($g_AdwareList, $g_AdwareListFragment);
         $l_Result .= '<div class="note_warn">' . AI_STR_029 . '</div><div class="warn">';
         $l_Result .= printList($g_AdwareList, $g_AdwareListFragment, true);
@@ -4658,11 +4661,11 @@ if (!AI_HOSTER) {
         $l_Result .= "</div>" . PHP_EOL;        
     }
     
-    stdOut("Building list of bigfiles " . count($g_BigFiles));
+    stdOut("Building list of bigfiles " . count((array)$g_BigFiles));
     $max_size_to_scan = getBytes(MAX_SIZE_TO_SCAN);
     $max_size_to_scan = $max_size_to_scan > 0 ? $max_size_to_scan : getBytes('1m');
     
-    if (count($g_BigFiles) > 0) {
+    if (count((array)$g_BigFiles) > 0) {
         $g_BigFiles               = array_slice($g_BigFiles, 0, AIBOLIT_MAX_NUMBER);
         $l_RawReport['big_files'] = getRawJson($g_BigFiles);
         $l_Result .= "<div class=\"note_warn\">" . sprintf(AI_STR_038, bytes2Human($max_size_to_scan)) . '</div><div class="warn">';
@@ -4671,9 +4674,9 @@ if (!AI_HOSTER) {
         $l_PlainResult .= '[BIG FILES / SKIPPED]' . "\n" . printPlainList($g_BigFiles) . "\n\n";
     }
     
-    stdOut("Building list of doorways " . count($g_Doorway));
+    stdOut("Building list of doorways " . count((array)$g_Doorway));
     
-    if ((count($g_Doorway) > 0) && (($defaults['report_mask'] & REPORT_MASK_DOORWAYS) == REPORT_MASK_DOORWAYS)) {
+    if ((count((array)$g_Doorway) > 0) && (($defaults['report_mask'] & REPORT_MASK_DOORWAYS) == REPORT_MASK_DOORWAYS)) {
         $g_Doorway              = array_slice($g_Doorway, 0, AIBOLIT_MAX_NUMBER);
         $l_RawReport['doorway'] = getRawJson($g_Doorway);
         $l_Result .= '<div class="note_warn">' . AI_STR_034 . '</div><div class="warn">';
@@ -4682,7 +4685,7 @@ if (!AI_HOSTER) {
         
     }
     
-    if (count($g_CMS) > 0) {
+    if (count((array)$g_CMS) > 0) {
         $l_RawReport['cms'] = $g_CMS;
         $l_Result .= "<div class=\"note_warn\">" . AI_STR_037 . "<br/>";
         $l_Result .= nl2br(makeSafeFn(implode("\n", $g_CMS)));
@@ -4693,37 +4696,37 @@ if (!AI_HOSTER) {
 if (ICHECK) {
     $l_Result .= "<div style=\"margin-top: 20px\" class=\"title\">" . AI_STR_087 . "</div>";
     
-    stdOut("Building list of added files " . count($changes['addedFiles']));
-    if (count($changes['addedFiles']) > 0) {
-        $l_Result .= '<div class="note_int">' . AI_STR_082 . ' (' . count($changes['addedFiles']) . ')</div><div class="intitem">';
+    stdOut("Building list of added files " . count((array)$changes['addedFiles']));
+    if (count((array)$changes['addedFiles']) > 0) {
+        $l_Result .= '<div class="note_int">' . AI_STR_082 . ' (' . count((array)$changes['addedFiles']) . ')</div><div class="intitem">';
         $l_Result .= printList($changes['addedFiles']);
         $l_Result .= "</div>" . PHP_EOL;
     }
     
-    stdOut("Building list of modified files " . count($changes['modifiedFiles']));
-    if (count($changes['modifiedFiles']) > 0) {
-        $l_Result .= '<div class="note_int">' . AI_STR_083 . ' (' . count($changes['modifiedFiles']) . ')</div><div class="intitem">';
+    stdOut("Building list of modified files " . count((array)$changes['modifiedFiles']));
+    if (count((array)$changes['modifiedFiles']) > 0) {
+        $l_Result .= '<div class="note_int">' . AI_STR_083 . ' (' . count((array)$changes['modifiedFiles']) . ')</div><div class="intitem">';
         $l_Result .= printList($changes['modifiedFiles']);
         $l_Result .= "</div>" . PHP_EOL;
     }
     
-    stdOut("Building list of deleted files " . count($changes['deletedFiles']));
-    if (count($changes['deletedFiles']) > 0) {
-        $l_Result .= '<div class="note_int">' . AI_STR_084 . ' (' . count($changes['deletedFiles']) . ')</div><div class="intitem">';
+    stdOut("Building list of deleted files " . count((array)$changes['deletedFiles']));
+    if (count((array)$changes['deletedFiles']) > 0) {
+        $l_Result .= '<div class="note_int">' . AI_STR_084 . ' (' . count((array)$changes['deletedFiles']) . ')</div><div class="intitem">';
         $l_Result .= printList($changes['deletedFiles']);
         $l_Result .= "</div>" . PHP_EOL;
     }
     
-    stdOut("Building list of added dirs " . count($changes['addedDirs']));
-    if (count($changes['addedDirs']) > 0) {
-        $l_Result .= '<div class="note_int">' . AI_STR_085 . ' (' . count($changes['addedDirs']) . ')</div><div class="intitem">';
+    stdOut("Building list of added dirs " . count((array)$changes['addedDirs']));
+    if (count((array)$changes['addedDirs']) > 0) {
+        $l_Result .= '<div class="note_int">' . AI_STR_085 . ' (' . count((array)$changes['addedDirs']) . ')</div><div class="intitem">';
         $l_Result .= printList($changes['addedDirs']);
         $l_Result .= "</div>" . PHP_EOL;
     }
     
-    stdOut("Building list of deleted dirs " . count($changes['deletedDirs']));
-    if (count($changes['deletedDirs']) > 0) {
-        $l_Result .= '<div class="note_int">' . AI_STR_086 . ' (' . count($changes['deletedDirs']) . ')</div><div class="intitem">';
+    stdOut("Building list of deleted dirs " . count((array)$changes['deletedDirs']));
+    if (count((array)$changes['deletedDirs']) > 0) {
+        $l_Result .= '<div class="note_int">' . AI_STR_086 . ' (' . count((array)$changes['deletedDirs']) . ')</div><div class="intitem">';
         $l_Result .= printList($changes['deletedDirs']);
         $l_Result .= "</div>" . PHP_EOL;
     }
@@ -4754,7 +4757,7 @@ $l_Template = str_replace('@@CREDITS@@', AI_STR_075, $l_Template);
 
 $l_Template = str_replace('@@FOOTER@@', AI_STR_076, $l_Template);
 
-$l_Template = str_replace('@@STAT@@', sprintf(AI_STR_012, $time_taken, date('d-m-Y в H:i:s', floor(START_TIME)), date('d-m-Y в H:i:s')), $l_Template);
+//$l_Template = str_replace('@@STAT@@', sprintf(AI_STR_012, $time_taken, date('d-m-Y в H:i:s', floor(START_TIME)), date('d-m-Y в H:i:s')), $l_Template);
 
 ////////////////////////////////////////////////////////////////////////////
 $l_Template = str_replace("@@MAIN_CONTENT@@", $l_Result, $l_Template);
@@ -4835,8 +4838,8 @@ stdOut("Scanning complete! Time taken: " . seconds2Human($time_taken));
 
 if (DEBUG_PERFORMANCE) {
     $keys = array_keys($g_RegExpStat);
-    for ($i = 0; $i < count($keys); $i++) {
-        $g_RegExpStat[$keys[$i]] = round($g_RegExpStat[$keys[$i]] * 1000000);
+    for ($i = 0; $i < count((array)$keys); $i++) {
+        $g_RegExpStat[$keys[$i]] = round((int)$g_RegExpStat[$keys[$i]] * 1000000);
     }
     
     arsort($g_RegExpStat);
@@ -4865,8 +4868,8 @@ QCR_Debug();
 
 # exit with code
 
-$l_EC1 = count($g_CriticalPHP);
-$l_EC2 = count($g_CriticalJS) + count($g_Phishing) + count($g_WarningPHP[0]) + count($g_WarningPHP[1]);
+$l_EC1 = count((array)$g_CriticalPHP);
+$l_EC2 = count((array)$g_CriticalJS) + count((array)$g_Phishing) + count((array)$g_WarningPHP[0]) + count((array)$g_WarningPHP[1]);
 $code  = 0;
 
 if ($l_EC1 > 0) {
@@ -4878,9 +4881,9 @@ if ($l_EC1 > 0) {
 }
 
 $stat = array(
-    'php_malware' => count($g_CriticalPHP),
-    'js_malware' => count($g_CriticalJS),
-    'phishing' => count($g_Phishing)
+    'php_malware' => count((array)$g_CriticalPHP),
+    'js_malware' => count((array)$g_CriticalJS),
+    'phishing' => count((array)$g_Phishing)
 );
 
 if (function_exists('aibolit_onComplete')) {
@@ -4949,7 +4952,7 @@ function Quarantine() {
     $width = array();
     foreach (array_keys($inf) as $k) {
         $width[$k] = strlen($k);
-        for ($i = 0; $i < count($inf[$k]); ++$i) {
+        for ($i = 0; $i < count((array)$inf[$k]); ++$i) {
             $len = strlen($inf[$k][$i]);
             if ($len > $width[$k])
                 $width[$k] = $len;
@@ -4963,7 +4966,7 @@ function Quarantine() {
     }
     $info .= "name\n";
     
-    for ($i = 0; $i < count($files); ++$i) {
+    for ($i = 0; $i < count((array)$files); ++$i) {
         foreach (array_keys($inf) as $k) {
             $info .= str_pad($inf[$k][$i], $width[$k], ' ', STR_PAD_LEFT) . ' ';
         }
@@ -5072,7 +5075,7 @@ function QCR_IntegrityCheck($l_RootDir) {
             
             // if folder in ignore list
             $l_Skip = false;
-            for ($dr = 0; $dr < count($g_DirIgnoreList); $dr++) {
+            for ($dr = 0; $dr < count((array)$g_DirIgnoreList); $dr++) {
                 if (($g_DirIgnoreList[$dr] != '') && preg_match('#' . $g_DirIgnoreList[$dr] . '#', $l_FileName, $l_Found)) {
                     if (!in_array($g_DirIgnoreList[$dr], $l_SkipSample)) {
                         $l_SkipSample[] = $g_DirIgnoreList[$dr];
@@ -5253,7 +5256,7 @@ function OptimizeSignatures() {
     (AI_EXPERT == 2) && ($g_JSVirSig = array_merge($g_JSVirSig, $gX_JSVirSig));
     $gX_JSVirSig = array();
     
-    $count = count($g_FlexDBShe);
+    $count = count((array)$g_FlexDBShe);
     
     for ($i = 0; $i < $count; $i++) {
         if ($g_FlexDBShe[$i] == '[a-zA-Z0-9_]+?\(\s*[a-zA-Z0-9_]+?=\s*\)')
@@ -5283,7 +5286,7 @@ function OptimizeSignatures() {
     //optSig($g_ExceptFlex);
     
     // convert exception rules
-    $cnt = count($g_ExceptFlex);
+    $cnt = count((array)$g_ExceptFlex);
     for ($i = 0; $i < $cnt; $i++) {
         $g_ExceptFlex[$i] = trim(UnwrapObfu($g_ExceptFlex[$i]));
         if (!strlen($g_ExceptFlex[$i]))
@@ -5360,7 +5363,7 @@ function optMergePrefixes($m) {
         $s = substr($line, $prefix_len);
         $len += strlen($s);
         if ($len > $limit) {
-            if (count($suffixes) == 1) {
+            if (count((array)$suffixes) == 1) {
                 $r[] = $prefix . $suffixes[0];
             } else {
                 $r[] = $prefix . '(?:' . implode('|', $suffixes) . ')';
@@ -5372,7 +5375,7 @@ function optMergePrefixes($m) {
     }
     
     if (!empty($suffixes)) {
-        if (count($suffixes) == 1) {
+        if (count((array)$suffixes) == 1) {
             $r[] = $prefix . $suffixes[0];
         } else {
             $r[] = $prefix . '(?:' . implode('|', $suffixes) . ')';
@@ -5579,7 +5582,7 @@ function deobfuscate_bitrix($str) {
     $res      = preg_replace("|[\"']\s*\.\s*['\"]|smi", '', $res);
     $res      = preg_replace_callback('~(?:min|max)\(\s*\d+[\,\|\s\|+\|\-\|\*\|\/][\d\s\.\,\+\-\*\/]+\)~ms', "calc", $res);
     $res = preg_replace_callback('|(round\((.+?)\))|smi', function($matches) {
-        return round($matches[2]);
+        return round((int)$matches[2]);
     }, $res);
     $res = preg_replace_callback('|base64_decode\(["\'](.*?)["\']\)|smi', function($matches) {
         return "'" . base64_decode($matches[1]) . "'";
@@ -5739,7 +5742,7 @@ function deobfuscate_lockit($str) {
     $pointer2      = hexdec($hexvalues[0]);
     $pointer3      = hexdec($hexvalues[1]);
     $needles       = getNeedles($phpcode);
-    $needle        = $needles[count($needles) - 2];
+    $needle        = $needles[count((array)$needles) - 2];
     $before_needle = end($needles);
     
     
@@ -5791,7 +5794,7 @@ function deobfuscate_urldecode($str) {
     $funcs = explode(';', $funcs);
     foreach ($funcs as $func) {
         $func_arr = explode("=", $func);
-        if (count($func_arr) == 2) {
+        if (count((array)$func_arr) == 2) {
             $func_arr[0] = str_replace('$', '', $func_arr[0]);
             $str         = str_replace('${"GLOBALS"}["' . $func_arr[0] . '"]', $func_arr[1], $str);
         }
@@ -5817,9 +5820,9 @@ function deobfuscate_fopo($str) {
     while (($old != $phpcode) && (strlen(strstr($phpcode, '@eval($')) > 0)) {
         $old   = $phpcode;
         $funcs = explode(';', $phpcode);
-        if (count($funcs) == 5)
+        if (count((array)$funcs) == 5)
             $phpcode = gzinflate(base64_decode(str_rot13(getTextInsideQuotes(getEvalCode($phpcode)))));
-        else if (count($funcs) == 4)
+        else if (count((array)$funcs) == 4)
             $phpcode = gzinflate(base64_decode(getTextInsideQuotes(getEvalCode($phpcode))));
     }
     
